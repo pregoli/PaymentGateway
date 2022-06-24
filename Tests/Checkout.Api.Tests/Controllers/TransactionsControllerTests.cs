@@ -13,12 +13,14 @@ internal class TransactionsControllerTests
 {
     private Mock<ICheckoutCommandApplication> _checkoutCommandApplication;
     private Mock<ICheckoutQueryApplication> _checkoutQueryApplication;
+    private TransactionsController _controller;
 
     [SetUp]
     public void Setup()
     {
         _checkoutCommandApplication = new Mock<ICheckoutCommandApplication>();
         _checkoutQueryApplication = new Mock<ICheckoutQueryApplication>();
+        _controller = new TransactionsController(_checkoutCommandApplication.Object, _checkoutQueryApplication.Object);
     }
 
     internal class ExecutePayment : TransactionsControllerTests
@@ -28,10 +30,9 @@ internal class TransactionsControllerTests
         {
             //Arrange
             var transactionrequest = new TransactionRequest();
-            var controller = new TransactionsController(_checkoutCommandApplication.Object, _checkoutQueryApplication.Object);
 
             //Act
-            _ = await controller.ExecutePayment(transactionrequest);
+            _ = await _controller.ExecutePayment(transactionrequest);
 
             //Assert
             _checkoutCommandApplication.Verify(mock => mock.ExecutePayment(It.IsAny<Guid>(), It.IsAny<CardDetails>(), It.IsAny<decimal>()), Times.Exactly(1));
@@ -45,10 +46,9 @@ internal class TransactionsControllerTests
         {
             //Arrange
             var transactionId = Guid.NewGuid();
-            var controller = new TransactionsController(_checkoutCommandApplication.Object, _checkoutQueryApplication.Object);
 
             //Act
-            _ = await controller.GetTransactionById(transactionId);
+            _ = await _controller.GetTransactionById(transactionId);
 
             //Assert
             _checkoutQueryApplication.Verify(mock => mock.GetTransactionById(transactionId), Times.Exactly(1));
@@ -62,10 +62,9 @@ internal class TransactionsControllerTests
         {
             //Arrange
             var merchantId = Guid.NewGuid();
-            var controller = new TransactionsController(_checkoutCommandApplication.Object, _checkoutQueryApplication.Object);
 
             //Act
-            _ = await controller.GetTransactionByMerchantId(merchantId);
+            _ = await _controller.GetTransactionByMerchantId(merchantId);
 
             //Assert
             _checkoutQueryApplication.Verify(mock => mock.GetTransactionsByMerchantId(merchantId), Times.Exactly(1));

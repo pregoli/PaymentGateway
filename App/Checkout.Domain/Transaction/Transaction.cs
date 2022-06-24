@@ -30,7 +30,7 @@ namespace Checkout.Domain.Transaction
         public string CardDetails { get; private set; }
         public TransactionStatus TransactionStatus { get; private set; }
         public string Description { get; private set; }
-        public bool Successful => string.IsNullOrEmpty(Description);
+        public bool Successful => TransactionStatus == TransactionStatus.Authorized;
         public DateTime Timestamp { get; private set; } = DateTime.UtcNow;
 
         public static Transaction Create(Guid merchantId, decimal amount, CardDetails cardDetails)
