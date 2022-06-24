@@ -1,10 +1,8 @@
-﻿using System;
+﻿namespace Checkout.Domain.Transaction.Exceptions;
 
-namespace Checkout.Domain.Transaction.Exceptions;
-
-public class InvalidCardException : Exception
+internal class InvalidCardException : Exception
 {
-    public InvalidCardException(string message)
+    internal InvalidCardException(string message)
         : base(message)
     {
     }

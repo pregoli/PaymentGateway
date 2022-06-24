@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Checkout.Domain.Transaction.Enums;
 using Checkout.Domain.Transaction.Specifications;
 using Checkout.Domain.Transaction.ValueObjects;
@@ -37,6 +36,7 @@ namespace Checkout.Domain.Transaction
         public static Transaction Create(Guid merchantId, decimal amount, CardDetails cardDetails)
         {
             ValidCardDetailsSpecification.Validate(cardDetails);
+            ValidMerchantIdSpecification.Validate(merchantId);
 
             return new Transaction(Guid.NewGuid(), merchantId, amount, cardDetails);
         }
