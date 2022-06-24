@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using Checkout.Infrastructure.Persistence;
+﻿using Checkout.Infrastructure.Persistence;
 using Checkout.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

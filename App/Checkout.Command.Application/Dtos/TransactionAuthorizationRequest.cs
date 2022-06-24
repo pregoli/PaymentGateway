@@ -1,5 +1,3 @@
-﻿using System;
-
-namespace Checkout.Command.Application.Common.Dto;
+﻿namespace Checkout.Command.Application.Dtos;
 
 public record TransactionAuthorizationRequest(Guid TransactionId, Guid MerchantId, decimal Amount);

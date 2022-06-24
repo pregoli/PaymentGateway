@@ -23,7 +23,7 @@ namespace Checkout.Api.Controllers
         [HttpGet("beta/[controller]")]
         public async Task<ActionResult<string>> Get()
         {
-            return await _metricsService.Get();
+            return await _metricsService.GetAsync();
         }
     }
 }

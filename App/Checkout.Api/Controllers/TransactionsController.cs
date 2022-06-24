@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Checkout.Api.Requests;
+﻿using Checkout.Api.Requests;
 using Checkout.Command.Application.Interfaces;
 using Checkout.Query.Application.Dtos;
 using Checkout.Query.Application.Interfaces;
@@ -49,7 +46,7 @@ public class TransactionsController : ControllerBase
     [ProducesResponseType(200, Type = typeof(TransactionResponse))]
     public async Task<IActionResult> GetTransactionById([FromRoute] Guid transactionId)
     {
-        var transaction = await _checkoutQueryApplication.GetTransaction(transactionId);
+        var transaction = await _checkoutQueryApplication.GetTransactionById(transactionId);
         return Ok(transaction);
     }
 

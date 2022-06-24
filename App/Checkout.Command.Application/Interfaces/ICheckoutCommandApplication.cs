@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Checkout.Domain.Transaction.ValueObjects;
+﻿using Checkout.Domain.Transaction.ValueObjects;
 
 namespace Checkout.Command.Application.Interfaces;
 

@@ -1,4 +1,4 @@
-﻿using Checkout.Command.Application.Common.Dto;
+﻿using Checkout.Command.Application.Dtos;
 
 namespace Checkout.Command.Application.Interfaces
 {

@@ -17,11 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.Query.Application"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.Api.Tests", "Tests\Checkout.Api.Tests\Checkout.Api.Tests.csproj", "{337C8462-1053-4E04-A7D8-FA846F19B97D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkout.Command.Application.Tests", "Tests\Checkout.Command.Application.Tests\Checkout.Command.Application.Tests.csproj", "{683241E3-8786-4B0F-86DD-0787CEFA93FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.Command.Application.Tests", "Tests\Checkout.Command.Application.Tests\Checkout.Command.Application.Tests.csproj", "{683241E3-8786-4B0F-86DD-0787CEFA93FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkout.Query.Application.Tests", "Tests\Checkout.Query.Application.Tests\Checkout.Query.Application.Tests.csproj", "{1AEC8BF4-B912-4F50-9A5A-FEF7EFE41DE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.Query.Application.Tests", "Tests\Checkout.Query.Application.Tests\Checkout.Query.Application.Tests.csproj", "{1AEC8BF4-B912-4F50-9A5A-FEF7EFE41DE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkout.Domain.Tests", "Tests\Checkout.Domain.Tests\Checkout.Domain.Tests.csproj", "{6D6A0596-E314-43A3-9C17-4AE40A9D8EDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.Domain.Tests", "Tests\Checkout.Domain.Tests\Checkout.Domain.Tests.csproj", "{6D6A0596-E314-43A3-9C17-4AE40A9D8EDE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{FD58D53D-C675-4063-8431-C7E344A0E741}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{84D40C93-D3FB-487B-B904-1CECBE17A898}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +76,17 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AFA23401-90B7-401B-A1C5-986CB1A21E1A} = {FD58D53D-C675-4063-8431-C7E344A0E741}
+		{3B41C3CA-C91F-4B58-88D9-7DD09143A121} = {FD58D53D-C675-4063-8431-C7E344A0E741}
+		{4C326A40-A500-4BE0-A44B-8EF286497D95} = {FD58D53D-C675-4063-8431-C7E344A0E741}
+		{80847D14-CA15-414F-9BDC-3EBC973066B5} = {FD58D53D-C675-4063-8431-C7E344A0E741}
+		{1217C55C-7DA5-4E6E-B9F6-C150FD4CE309} = {FD58D53D-C675-4063-8431-C7E344A0E741}
+		{337C8462-1053-4E04-A7D8-FA846F19B97D} = {84D40C93-D3FB-487B-B904-1CECBE17A898}
+		{683241E3-8786-4B0F-86DD-0787CEFA93FB} = {84D40C93-D3FB-487B-B904-1CECBE17A898}
+		{1AEC8BF4-B912-4F50-9A5A-FEF7EFE41DE1} = {84D40C93-D3FB-487B-B904-1CECBE17A898}
+		{6D6A0596-E314-43A3-9C17-4AE40A9D8EDE} = {84D40C93-D3FB-487B-B904-1CECBE17A898}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2C85A8E-CF77-45C7-83D5-86A21807E569}

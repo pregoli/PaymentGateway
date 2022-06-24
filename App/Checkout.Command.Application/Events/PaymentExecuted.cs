@@ -1,15 +1,10 @@
-﻿using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using Checkout.Command.Application.Common.Dto;
+﻿using Checkout.Command.Application.Dtos;
 using Checkout.Command.Application.Interfaces;
 using Checkout.Domain.Transaction;
-using Checkout.Domain.Transaction.ValueObjects;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Checkout.Command.Application.Events.Transactions;
+namespace Checkout.Command.Application.Events;
 
 internal record PaymentExecuted : INotification
 {

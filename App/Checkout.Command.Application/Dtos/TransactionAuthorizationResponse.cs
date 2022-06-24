@@ -1,5 +1,3 @@
-﻿using System;
-
-namespace Checkout.Command.Application.Common.Dto;
+﻿namespace Checkout.Command.Application.Dtos;
 
 public record TransactionAuthorizationResponse(Guid TransactionId, bool Authorized, string Code, string Description);

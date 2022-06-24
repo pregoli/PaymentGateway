@@ -1,13 +1,10 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Checkout.Command.Application.Events.Transactions;
+﻿using Checkout.Command.Application.Events;
 using Checkout.Command.Application.Interfaces;
 using Checkout.Domain.Transaction;
 using Checkout.Domain.Transaction.ValueObjects;
 using MediatR;
 
-namespace Checkout.Command.Application.Commands.Transactions;
+namespace Checkout.Command.Application.Commands;
 
 public class ExecutePayment : IRequest<Guid>
 {

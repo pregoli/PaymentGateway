@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Checkout.Command.Application.Commands.Transactions;
+﻿using Checkout.Command.Application.Commands;
 using Checkout.Command.Application.Interfaces;
 using Checkout.Domain.Transaction.ValueObjects;
 using MediatR;

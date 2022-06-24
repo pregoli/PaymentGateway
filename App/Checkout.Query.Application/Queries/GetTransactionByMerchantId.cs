@@ -3,7 +3,7 @@ using Checkout.Query.Application.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Checkout.Query.Application.Queries.Transactions;
+namespace Checkout.Query.Application.Queries;
 
 public class GetTransactionByMerchantId : IRequest<List<TransactionResponse>>
 {

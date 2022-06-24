@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Checkout.Query.Application.Interfaces;
 using Checkout.Query.Application.Dtos;
 
-namespace Checkout.Query.Application.Queries.Transactions;
+namespace Checkout.Query.Application.Queries;
 
 public class GetTransactionById : IRequest<TransactionResponse>
 {

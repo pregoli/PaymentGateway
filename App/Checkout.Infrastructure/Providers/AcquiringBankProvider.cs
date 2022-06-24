@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using Checkout.Command.Application.Common.Dto;
-using System.Collections.Generic;
-using System.Linq;
 using Checkout.Command.Application.Interfaces;
+using Checkout.Command.Application.Dtos;
 
 namespace Checkout.Infrastructure.Providers;
 

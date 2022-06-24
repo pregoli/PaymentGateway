@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿namespace Checkout.Infrastructure.Instrumentation;
 
-namespace Checkout.Infrastructure.Instrumentation
+public interface IMetricsService
 {
-    public interface IMetricsService
-    {
-        Task<string> Get();
-    }
+    Task<string> GetAsync();
 }
