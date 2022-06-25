@@ -20,7 +20,7 @@ namespace Checkout.Domain.Transaction
             MerchantId = merchantId;
             Amount = amount;
             CardDetails = JsonSerializer.Serialize(cardDetails);
-            TransactionStatus = TransactionStatus.Processing;
+            Status = TransactionStatus.Processing;
         }
 
         public Guid Id { get; private set; }
@@ -28,9 +28,9 @@ namespace Checkout.Domain.Transaction
         public static string Currency => "GBP";
         public decimal Amount { get; private set; }
         public string CardDetails { get; private set; }
-        public TransactionStatus TransactionStatus { get; private set; }
+        public TransactionStatus Status { get; private set; }
         public string Description { get; private set; }
-        public bool Successful => TransactionStatus == TransactionStatus.Authorized;
+        public bool Successful => Status == TransactionStatus.Authorized;
         public DateTime Timestamp { get; private set; } = DateTime.UtcNow;
 
         public static Transaction Create(Guid merchantId, decimal amount, CardDetails cardDetails)
@@ -43,13 +43,13 @@ namespace Checkout.Domain.Transaction
 
         public void Reject(string description)
         {
-            TransactionStatus = TransactionStatus.Rejected;
+            Status = TransactionStatus.Rejected;
             Description = description;
         }
         
         public void Authorize()
         {
-            TransactionStatus = TransactionStatus.Authorized;
+            Status = TransactionStatus.Authorized;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Checkout.Domain.Tests.Transaction
         internal class Reject : TransactionTests
         {
             [TestCaseSource(nameof(ValidCardDetailsCaseSource))]
-            public void Given_A_Transaction_Rejection_Then_The_TransactionStatus_And_Description_Should_Match(CardDetails cardDetails)
+            public void Given_A_Transaction_Rejection_Then_The_Status_Should_Match(CardDetails cardDetails)
             {
                 //Arrange
                 var transaction = Domain.Transaction.Transaction.Create(Guid.NewGuid(), 100, cardDetails);
@@ -45,7 +45,7 @@ namespace Checkout.Domain.Tests.Transaction
                 transaction.Reject("error");
 
                 //Assert
-                Assert.AreEqual(TransactionStatus.Rejected, transaction.TransactionStatus);
+                Assert.AreEqual(TransactionStatus.Rejected, transaction.Status);
                 Assert.False(transaction.Successful);
             }
         }
@@ -53,7 +53,7 @@ namespace Checkout.Domain.Tests.Transaction
         internal class Authorize : TransactionTests
         {
             [TestCaseSource(nameof(ValidCardDetailsCaseSource))]
-            public void Given_A_Transaction_Authorization_Then_The_TransactionStatus_And_Description_Should_Match(CardDetails cardDetails)
+            public void Given_A_Transaction_Authorization_Then_The_Status_Should_Match(CardDetails cardDetails)
             {
                 //Arrange
                 var transaction = Domain.Transaction.Transaction.Create(Guid.NewGuid(), 100, cardDetails);
@@ -62,7 +62,7 @@ namespace Checkout.Domain.Tests.Transaction
                 transaction.Authorize();
 
                 //Assert
-                Assert.AreEqual(TransactionStatus.Authorized, transaction.TransactionStatus);
+                Assert.AreEqual(TransactionStatus.Authorized, transaction.Status);
                 Assert.True(transaction.Successful);
             }
         }

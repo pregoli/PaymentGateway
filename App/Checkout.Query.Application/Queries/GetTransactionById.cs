@@ -27,32 +27,21 @@ public class GetTransactionByIdQueryHandler : IRequestHandler<GetTransactionById
         _logger = logger;
     }
 
-    public async Task<TransactionResponse> Handle(GetTransactionById request, CancellationToken cancellationToken)
+    public async Task<TransactionResponse?> Handle(GetTransactionById request, CancellationToken cancellationToken)
     {
-        try
+        var transaction = await _transactionsHistoryQueryRepository.GetByTransactionIdAsync(request.Id);
+        if (transaction != null)
         {
-            var transaction = await _transactionsHistoryQueryRepository.GetByTransactionIdAsync(request.Id);
-            if (transaction != null)
-            {
-                return TransactionResponse.Map(
-                    transaction.Id,
-                    transaction.MerchantId,
-                    transaction.CardDetails,
-                    transaction.Amount,
-                    transaction.TransactionStatus.ToString(),
-                    transaction.Description,
-                    transaction.Timestamp);
-            }
-            else
-            {
-                return TransactionResponse.Unprocessable(request.Id, HttpStatusCode.NotFound.ToString(), "The requested transaction could not be found");
-            }
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Checkout Request: Unhandled Exception for Request {Request}", request);
+            return TransactionResponse.Map(
+                transaction.Id,
+                transaction.MerchantId,
+                transaction.CardDetails,
+                transaction.Amount,
+                transaction.Status.ToString(),
+                transaction.Description,
+                transaction.Timestamp);
         }
 
-        return TransactionResponse.Unprocessable(request.Id, HttpStatusCode.ServiceUnavailable.ToString(), "Unfortunately It was not possible to process your request");
+        return null;
     }
 }

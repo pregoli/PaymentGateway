@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
+using Checkout.Domain.Transaction.Enums;
 using Checkout.Domain.Transaction.ValueObjects;
 using Checkout.Query.Application.Extensions;
 
@@ -12,7 +14,7 @@ public record TransactionResponse
         string cardHolderName,
         string cardNumber,
         decimal amount,
-        string transactionStatus,
+        string status,
         string description,
         DateTime timestamp)
     {
@@ -21,7 +23,7 @@ public record TransactionResponse
         CardHolderName = cardHolderName;
         CardNumber = cardNumber;
         Amount = amount;
-        TransactionStatus = transactionStatus;
+        Status = status;
         Description = description;
         Timestamp = timestamp;
         Currency = "GBP";
@@ -32,32 +34,18 @@ public record TransactionResponse
     public string CardHolderName { get; init; }
     public string CardNumber { get; init; }
     public decimal Amount { get; init; }
-    public string TransactionStatus { get; init; }
+    public string Status { get; init; }
     public string Description { get; init; }
     public DateTime Timestamp { get; init; }
     public string Currency { get; init; }
-    public bool Successful => string.IsNullOrEmpty(Description);
-
-    public static TransactionResponse Unprocessable(
-        Guid transactionId, string transactionStatus, string description)
-    {
-        return new TransactionResponse(
-            transactionId,
-            merchantId: default,
-            cardHolderName: default,
-            cardNumber: default,
-            amount: default,
-            transactionStatus,
-            description,
-            timestamp: default);
-    }
+    public bool Successful => Status == TransactionStatus.Authorized.ToString();
     
     public static TransactionResponse Map(
         Guid transactionId,
         Guid merchantId,
         string stringfiedCardDetails,
         decimal amount,
-        string transactionStatus,
+        string status,
         string description,
         DateTime timestamp)
     {
@@ -68,7 +56,7 @@ public record TransactionResponse
             cardDetails.CardHolderName,
             cardDetails.CardNumber.Mask('X'),
             amount,
-            transactionStatus,
+            status,
             description,
             timestamp);
     }

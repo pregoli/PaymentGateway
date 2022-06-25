@@ -38,7 +38,7 @@ public class GetTransactionsByMerchantIdQueryHandler : IRequestHandler<GetTransa
                 transaction.MerchantId,
                 transaction.CardDetails,
                 transaction.Amount,
-                transaction.TransactionStatus.ToString(),
+                transaction.Status.ToString(),
                 transaction.Description,
                 transaction.Timestamp)).ToList() ?? response;
         }
