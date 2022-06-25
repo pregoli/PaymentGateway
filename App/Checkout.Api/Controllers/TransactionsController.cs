@@ -7,8 +7,9 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace Checkout.Api.Controllers;
 
-[Route("api")]
 [ApiController]
+[Route("api")]
+[Consumes("application/json")]
 [Produces("application/json")]
 public class TransactionsController : ControllerBase
 {

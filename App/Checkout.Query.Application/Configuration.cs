@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Checkout.Query.Application.Interfaces;
 

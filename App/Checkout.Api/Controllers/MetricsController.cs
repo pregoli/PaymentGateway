@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using Checkout.Infrastructure.Instrumentation;
+﻿using Checkout.Infrastructure.Instrumentation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Checkout.Api.Controllers
 {
-    [Route("api")]
     [ApiController]
+    [Route("api")]
+    [Consumes("application/json")]
     [Produces("application/json")]
     public class MetricsController : ControllerBase
     {
