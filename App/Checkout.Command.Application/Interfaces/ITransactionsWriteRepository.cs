@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using Checkout.Domain.Transaction;
+﻿using Checkout.Domain.Transaction;
 
 namespace Checkout.Command.Application.Interfaces;
 
-public interface ITransactionsHistoryCommandRepository
+public interface ITransactionsWriteRepository
 {
     Task<Transaction> SaveAsync(Transaction transaction);
     Task<Transaction> UpdateAsync(Transaction transaction);

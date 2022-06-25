@@ -17,12 +17,12 @@ public class GetTransactionsByMerchantId : IRequest<List<TransactionResponse>>
 
 public class GetTransactionsByMerchantIdQueryHandler : IRequestHandler<GetTransactionsByMerchantId, List<TransactionResponse>>
 {
-    private readonly ITransactionsHistoryQueryRepository _transactionsHistoryQueryRepository;
+    private readonly ITransactionsQueryRepository _transactionsQueryRepository;
     private readonly ILogger<GetTransactionsByMerchantIdQueryHandler> _logger;
 
-    public GetTransactionsByMerchantIdQueryHandler(ITransactionsHistoryQueryRepository transactionsHistoryQueryRepository, ILogger<GetTransactionsByMerchantIdQueryHandler> logger)
+    public GetTransactionsByMerchantIdQueryHandler(ITransactionsQueryRepository transactionsQueryRepository, ILogger<GetTransactionsByMerchantIdQueryHandler> logger)
     {
-        _transactionsHistoryQueryRepository = transactionsHistoryQueryRepository;
+        _transactionsQueryRepository = transactionsQueryRepository;
         _logger = logger;
     }
 
@@ -32,19 +32,19 @@ public class GetTransactionsByMerchantIdQueryHandler : IRequestHandler<GetTransa
 
         try
         {
-            var transactions = await _transactionsHistoryQueryRepository.GetByMerchantIdAsync(request.MerchantId);
-            return transactions?.Select(transaction => TransactionResponse.Map(
+            var transactions = await _transactionsQueryRepository.GetByMerchantIdAsync(request.MerchantId);
+            return transactions.Select(transaction => TransactionResponse.Map(
                 transaction.Id,
                 transaction.MerchantId,
                 transaction.CardDetails,
                 transaction.Amount,
                 transaction.Status.ToString(),
                 transaction.Description,
-                transaction.Timestamp)).ToList() ?? response;
+                transaction.Timestamp)).ToList()!;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Checkout Request: Unhandled Exception for Request {Request}", request);
+            _logger.LogError(ex, "Checkout Request: Unhandled Exception for Request {@Request}", request);
         }
 
         return response;

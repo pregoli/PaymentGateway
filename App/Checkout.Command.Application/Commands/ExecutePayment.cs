@@ -22,22 +22,22 @@ public class ExecutePayment : IRequest<Guid>
 
 internal class ExecutePaymentHandler : IRequestHandler<ExecutePayment, Guid>
 {
-    private readonly ITransactionsHistoryCommandRepository _transactionsHistoryCommandRepository;
+    private readonly ITransactionsWriteRepository _transactionsWriteRepository;
     private readonly IPublisher _publisher;
 
-    public ExecutePaymentHandler(ITransactionsHistoryCommandRepository transactionsHistoryCommandRepository, IPublisher publisher)
+    public ExecutePaymentHandler(ITransactionsWriteRepository transactionsWriteRepository, IPublisher publisher)
     {
-        _transactionsHistoryCommandRepository = transactionsHistoryCommandRepository;
+        _transactionsWriteRepository = transactionsWriteRepository;
         _publisher = publisher;
     }
 
     public async Task<Guid> Handle(ExecutePayment command, CancellationToken cancellationToken)
     {
         var transaction = Transaction.Create(command.MerchantId, command.Amount, command.CardDetails);
-        await _transactionsHistoryCommandRepository.SaveAsync(transaction);
+        await _transactionsWriteRepository.SaveAsync(transaction!);
 
-        _publisher.Publish(new PaymentExecuted(transaction), cancellationToken);
+        _ = Task.Run(() => _publisher.Publish(new PaymentExecuted(transaction), cancellationToken));
 
-        return transaction.Id;
+        return transaction!.Id;
     }
 }

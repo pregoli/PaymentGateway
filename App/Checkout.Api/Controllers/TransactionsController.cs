@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Checkout.Api.Requests;
+﻿using Checkout.Api.Requests;
 using Checkout.Command.Application.Interfaces;
 using Checkout.Query.Application.Dtos;
 using Checkout.Query.Application.Interfaces;
@@ -48,7 +47,7 @@ public class TransactionsController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetTransactionById([FromRoute] Guid transactionId)
     {
-        var transaction = await _checkoutQueryApplication.GetTransactionById(transactionId);
+        var transaction = await _checkoutQueryApplication.GetTransactionByIdAsync(transactionId);
         return transaction is not null ? Ok(transaction) : NotFound();
     }
 
@@ -61,7 +60,7 @@ public class TransactionsController : ControllerBase
     [ProducesResponseType(200, Type = typeof(List<TransactionResponse>))]
     public async Task<ActionResult<List<TransactionResponse>>> GetTransactionByMerchantId([FromRoute] Guid merchantId)
     {
-        var transactions = await _checkoutQueryApplication.GetTransactionsByMerchantId(merchantId);
+        var transactions = await _checkoutQueryApplication.GetTransactionsByMerchantIdAsync(merchantId);
         return Ok(transactions);
     }
 }

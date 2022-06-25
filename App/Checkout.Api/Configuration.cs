@@ -1,9 +1,9 @@
 using System.Text.Json.Serialization;
 using Checkout.Api.Requests;
+using Checkout.Domain.Transaction.Exceptions;
 using Checkout.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Hellang.Middleware.ProblemDetails;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Prometheus;
 using Swashbuckle.AspNetCore.Filters;
@@ -14,6 +14,17 @@ internal static class Configuration
 {
     internal static IServiceCollection AddWebApiServices(this IServiceCollection services)
     {
+        services.AddProblemDetails(setup =>
+        {
+            setup.IncludeExceptionDetails = (ctx, env) => false;
+            setup.Map<DomainException>(exception => new ProblemDetails
+            {
+                Detail = exception.Message,
+                Status = StatusCodes.Status400BadRequest,
+                Type = exception.GetType().ToString()
+            });
+        });
+
         services
             .AddRouting(options => options.LowercaseUrls = true)
             .AddControllers()
@@ -37,6 +48,7 @@ internal static class Configuration
 
     internal static WebApplication ConfigureWebApi(this WebApplication app)
     {
+        app.UseProblemDetails();
         app.UseSwagger();
         app.UseSwaggerUI();
         app.UseMetricServer("/api/beta/metrics");
@@ -51,13 +63,11 @@ internal static class Configuration
 
     private static void MigrateDatabase(IApplicationBuilder builder)
     {
-        using (var serviceScope = builder.ApplicationServices
-            .GetRequiredService<IServiceScopeFactory>()
-            .CreateScope())
+        using (var serviceScope = builder.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
         {
             using (var context = serviceScope.ServiceProvider.GetService<CheckoutDbContext>())
             {
-                context.Database.EnsureCreated();
+                context!.Database.EnsureCreated();
             }
         }
     }

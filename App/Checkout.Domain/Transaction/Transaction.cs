@@ -7,8 +7,7 @@ namespace Checkout.Domain.Transaction
 {
     public class Transaction
     {
-        private Transaction()
-        {}
+        private Transaction() {}
 
         private Transaction(
             Guid id,
@@ -35,8 +34,9 @@ namespace Checkout.Domain.Transaction
 
         public static Transaction Create(Guid merchantId, decimal amount, CardDetails cardDetails)
         {
-            ValidCardDetailsSpecification.Validate(cardDetails);
             ValidMerchantIdSpecification.Validate(merchantId);
+            ValidAmountSpecification.Validate(amount);
+            ValidCardDetailsSpecification.Validate(cardDetails);
 
             return new Transaction(Guid.NewGuid(), merchantId, amount, cardDetails);
         }

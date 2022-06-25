@@ -2,9 +2,9 @@
 
 namespace Checkout.Query.Application.Interfaces
 {
-    public interface ITransactionsHistoryQueryRepository
+    public interface ITransactionsQueryRepository
     {
-        Task<Transaction> GetByTransactionIdAsync(Guid transactionId);
+        Task<Transaction?> GetByTransactionIdAsync(Guid transactionId);
         Task<List<Transaction>> GetByMerchantIdAsync(Guid merchantId);
     }
 }

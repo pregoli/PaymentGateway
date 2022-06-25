@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Checkout.Domain.Transaction.Enums;
 using Checkout.Domain.Transaction.ValueObjects;
 using Checkout.Query.Application.Extensions;
@@ -29,15 +28,15 @@ public record TransactionResponse
         Currency = "GBP";
     }
 
-    public Guid TransactionId { get; init; }
-    public Guid MerchantId { get; init; }
-    public string CardHolderName { get; init; }
-    public string CardNumber { get; init; }
-    public decimal Amount { get; init; }
-    public string Status { get; init; }
-    public string Description { get; init; }
-    public DateTime Timestamp { get; init; }
-    public string Currency { get; init; }
+    public Guid TransactionId { get; }
+    public Guid MerchantId { get; }
+    public string CardHolderName { get; }
+    public string CardNumber { get; }
+    public decimal Amount { get; }
+    public string Status { get; }
+    public string Description { get; }
+    public DateTime Timestamp { get; }
+    public string Currency { get; }
     public bool Successful => Status == TransactionStatus.Authorized.ToString();
     
     public static TransactionResponse Map(
@@ -53,7 +52,7 @@ public record TransactionResponse
         return new TransactionResponse(
             transactionId,
             merchantId,
-            cardDetails.CardHolderName,
+            cardDetails!.CardHolderName,
             cardDetails.CardNumber.Mask('X'),
             amount,
             status,

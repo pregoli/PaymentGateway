@@ -1,8 +1,8 @@
 ﻿namespace Checkout.Domain.Transaction.Exceptions;
 
-internal class InvalidAmountException : Exception
+public class InvalidAmountException : DomainException
 {
-    internal InvalidAmountException(string message)
+    public InvalidAmountException(string message)
         : base(message)
     {
     }

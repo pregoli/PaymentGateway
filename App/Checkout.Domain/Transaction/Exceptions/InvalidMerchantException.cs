@@ -1,8 +1,8 @@
 ﻿namespace Checkout.Domain.Transaction.Exceptions;
 
-internal class InvalidMerchantException : Exception
+public class InvalidMerchantException : DomainException
 {
-    internal InvalidMerchantException(string message)
+    public InvalidMerchantException(string message)
         : base(message)
     {
     }

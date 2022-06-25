@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Checkout.Domain.Transaction.ValueObjects;
+﻿namespace Checkout.Domain.Transaction.ValueObjects;
 
 public record CardDetails
 {

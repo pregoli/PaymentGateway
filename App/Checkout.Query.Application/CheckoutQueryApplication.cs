@@ -13,12 +13,12 @@ internal class CheckoutQueryApplication : ICheckoutQueryApplication
         _sender = sender;
     }
 
-    public async Task<TransactionResponse> GetTransactionById(Guid transactionId)
+    public async Task<TransactionResponse> GetTransactionByIdAsync(Guid transactionId)
     {
         return await _sender.Send(new GetTransactionById(transactionId));
     }
 
-    public async Task<List<TransactionResponse>> GetTransactionsByMerchantId(Guid merchantId)
+    public async Task<List<TransactionResponse>> GetTransactionsByMerchantIdAsync(Guid merchantId)
     {
         return await _sender.Send(new GetTransactionsByMerchantId(merchantId));
     }

@@ -21,8 +21,8 @@ public static class Configuration
 
         services.AddScoped<IAcquiringBankProvider, AcquiringBankProvider>();
 
-        services.AddScoped<ITransactionsHistoryCommandRepository, TransactionsHistoryCommandRepository>();
-        services.AddScoped<ITransactionsHistoryQueryRepository, TransactionsHistoryQueryRepository>();
+        services.AddScoped<ITransactionsWriteRepository, TransactionsWriteRepository>();
+        services.AddScoped<ITransactionsQueryRepository, TransactionsQueryRepository>();
 
         services.AddHttpClient<IMetricsService, MetricsService>(
                     client =>

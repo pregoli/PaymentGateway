@@ -2,6 +2,7 @@
 using Checkout.Domain.Transaction.Enums;
 using Checkout.Domain.Transaction.Exceptions;
 using Checkout.Domain.Transaction.ValueObjects;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Checkout.Domain.Tests.Transaction
@@ -14,8 +15,11 @@ namespace Checkout.Domain.Tests.Transaction
             [TestCaseSource(nameof(InvalidCardDetailsCaseSource))]
             public void Given_An_Invalid_CardDetails_Then_A_Domain_Exception_Is_Expected(CardDetails cardDetails)
             {
-                //Act & Assert
-                Assert.Throws<InvalidCardException>(() => Domain.Transaction.Transaction.Create(Guid.NewGuid(), 100, cardDetails));
+                //Act
+                Action acttion = () => Domain.Transaction.Transaction.Create(Guid.NewGuid(), 100, cardDetails);
+
+                //Assert
+                acttion.Should().Throw<InvalidCardException>();
             }
 
             [TestCaseSource(nameof(ValidCardDetailsCaseSource))]
@@ -28,8 +32,8 @@ namespace Checkout.Domain.Tests.Transaction
                 var transaction = Domain.Transaction.Transaction.Create(merchantId, 100, cardDetails);
 
                 //Assert
-                Assert.AreEqual(merchantId, transaction.MerchantId);
-                Assert.AreEqual(cardDetails, JsonSerializer.Deserialize<CardDetails>(transaction.CardDetails));
+                transaction.MerchantId.Should().Be(merchantId);
+                JsonSerializer.Deserialize<CardDetails>(transaction.CardDetails).Should().Be(cardDetails);
             }
         }
 
@@ -45,8 +49,8 @@ namespace Checkout.Domain.Tests.Transaction
                 transaction.Reject("error");
 
                 //Assert
-                Assert.AreEqual(TransactionStatus.Rejected, transaction.Status);
-                Assert.False(transaction.Successful);
+                transaction.Status.Should().Be(TransactionStatus.Rejected);
+                transaction.Successful.Should().BeFalse();
             }
         }
 
@@ -62,8 +66,8 @@ namespace Checkout.Domain.Tests.Transaction
                 transaction.Authorize();
 
                 //Assert
-                Assert.AreEqual(TransactionStatus.Authorized, transaction.Status);
-                Assert.True(transaction.Successful);
+                transaction.Status.Should().Be(TransactionStatus.Authorized);
+                transaction.Successful.Should().BeTrue();
             }
         }
 

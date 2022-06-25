@@ -4,6 +4,7 @@ using Checkout.Command.Application.Interfaces;
 using Checkout.Domain.Transaction;
 using Checkout.Domain.Transaction.Exceptions;
 using Checkout.Domain.Transaction.ValueObjects;
+using FluentAssertions;
 using MediatR;
 using Moq;
 using NUnit.Framework;
@@ -13,20 +14,20 @@ namespace Checkout.Command.Application.Tests.Commands;
 [TestFixture]
 internal class ExecutePaymentTests
 {
-    private Mock<ITransactionsHistoryCommandRepository> _transactionsHistoryCommandRepository;
+    private Mock<ITransactionsWriteRepository> _transactionsWriteRepository;
     private Mock<IPublisher> _publisher;
     private ExecutePaymentHandler _executePaymentHandler;
 
     [SetUp]
     public void Setup()
     {
-        _transactionsHistoryCommandRepository = new Mock<ITransactionsHistoryCommandRepository>();
+        _transactionsWriteRepository = new Mock<ITransactionsWriteRepository>();
         _publisher = new Mock<IPublisher>();
-        _executePaymentHandler = new ExecutePaymentHandler(_transactionsHistoryCommandRepository.Object, _publisher.Object); 
+        _executePaymentHandler = new ExecutePaymentHandler(_transactionsWriteRepository.Object, _publisher.Object); 
     }
 
     [Test]
-    public async Task Given_An_Invalid_ExecutePayment_Command_Then_The_Transaction_Should_Not_Be_Stored()
+    public void Given_An_Invalid_ExecutePayment_Command_Then_The_Transaction_Should_Not_Be_Stored()
     {
         //Arrange
         var command = new ExecutePayment(Guid.NewGuid(), new CardDetails
@@ -38,9 +39,12 @@ internal class ExecutePaymentTests
             ExpirationYear = "2026"
         }, 100);
 
-        //Act & Assert
-        Assert.ThrowsAsync<InvalidCardException>(() => _executePaymentHandler.Handle(command, default));
-        _transactionsHistoryCommandRepository.Verify(mock => mock.SaveAsync(It.IsAny<Transaction>()), Times.Never);
+        //Act
+        Func<Task> action = async () => await _executePaymentHandler.Handle(command, default);
+
+        //Assert
+        _ = action.Should().ThrowAsync<InvalidCardException>();
+        _transactionsWriteRepository.Verify(mock => mock.SaveAsync(It.IsAny<Transaction>()), Times.Never);
         _publisher.Verify(mock => mock.Publish(It.IsAny<PaymentExecuted>(), default), Times.Never);
     }
     
@@ -61,8 +65,8 @@ internal class ExecutePaymentTests
         var transactionId = await _executePaymentHandler.Handle(command, default);
 
         //Act & Assert
-        Assert.True(transactionId != Guid.Empty);
-        _transactionsHistoryCommandRepository.Verify(mock => mock.SaveAsync(It.IsAny<Transaction>()), Times.Exactly(1));
+        transactionId.Should().NotBe(Guid.Empty);
+        _transactionsWriteRepository.Verify(mock => mock.SaveAsync(It.IsAny<Transaction>()), Times.Exactly(1));
         _publisher.Verify(mock => mock.Publish(It.IsAny<PaymentExecuted>(), default), Times.Exactly(1));
     }
 }

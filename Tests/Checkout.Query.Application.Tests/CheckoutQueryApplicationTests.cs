@@ -26,7 +26,7 @@ internal class CheckoutQueryApplicationTests
             var query = new Application.Queries.GetTransactionById(Guid.NewGuid());
 
             //Act
-            _ = await _application.GetTransactionById(query.Id);
+            _ = await _application.GetTransactionByIdAsync(query.Id);
 
             //Assert
             _sender.Verify(mock => mock.Send(It.IsAny<Application.Queries.GetTransactionById>(), default), Times.Exactly(1));
@@ -42,7 +42,7 @@ internal class CheckoutQueryApplicationTests
             var query = new Application.Queries.GetTransactionsByMerchantId(Guid.NewGuid());
 
             //Act
-            _ = await _application.GetTransactionsByMerchantId(query.MerchantId);
+            _ = await _application.GetTransactionsByMerchantIdAsync(query.MerchantId);
 
             //Assert
             _sender.Verify(mock => mock.Send(It.IsAny<Application.Queries.GetTransactionsByMerchantId>(), default), Times.Exactly(1));

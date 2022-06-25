@@ -8,27 +8,27 @@ namespace Checkout.Command.Application.Events;
 
 internal record PaymentExecuted : INotification
 {
-    public PaymentExecuted(Transaction transaction)
+    public PaymentExecuted(Transaction? transaction)
     {
         Transaction = transaction;
     }
 
-    internal Transaction Transaction { get; private init; }
+    internal Transaction? Transaction { get; private init; }
 }
 
 internal class PaymentExecutedHandler : INotificationHandler<PaymentExecuted>
 {
     private readonly IAcquiringBankProvider _acquiringBankProvider;
-    private readonly ITransactionsHistoryCommandRepository _transactionsHistoryCommandRepository;
+    private readonly ITransactionsWriteRepository _transactionsWriteRepository;
     private readonly ILogger<PaymentExecutedHandler> _logger;
 
     public PaymentExecutedHandler(
         IAcquiringBankProvider acquiringBankProvider,
-        ITransactionsHistoryCommandRepository transactionsHistoryCommandRepository,
+        ITransactionsWriteRepository transactionsWriteRepository,
         ILogger<PaymentExecutedHandler> logger)
     {
         _acquiringBankProvider = acquiringBankProvider;
-        _transactionsHistoryCommandRepository = transactionsHistoryCommandRepository;
+        _transactionsWriteRepository = transactionsWriteRepository;
         _logger = logger;
     }
 
@@ -36,7 +36,7 @@ internal class PaymentExecutedHandler : INotificationHandler<PaymentExecuted>
     {
         try
         {
-            var transaction = @event.Transaction;
+            var transaction = @event.Transaction!;
 
             var transactionResponse = _acquiringBankProvider.ValidateTransaction(
                 new TransactionAuthorizationRequest(transaction.Id, transaction.MerchantId, transaction.Amount));
@@ -46,7 +46,7 @@ internal class PaymentExecutedHandler : INotificationHandler<PaymentExecuted>
             else
                 transaction.Reject(transactionResponse.Description);
 
-            await _transactionsHistoryCommandRepository.UpdateAsync(transaction);
+            await _transactionsWriteRepository.UpdateAsync(transaction);
         }
         catch (Exception ex)
         {

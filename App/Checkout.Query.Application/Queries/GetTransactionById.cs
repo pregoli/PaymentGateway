@@ -1,5 +1,4 @@
-﻿using System.Net;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Checkout.Query.Application.Interfaces;
 using Checkout.Query.Application.Dtos;
@@ -16,21 +15,21 @@ public class GetTransactionById : IRequest<TransactionResponse>
     public Guid Id { get; }
 }
 
-public class GetTransactionByIdQueryHandler : IRequestHandler<GetTransactionById, TransactionResponse>
+public class GetTransactionByIdQueryHandler : IRequestHandler<GetTransactionById, TransactionResponse?>
 {
-    private readonly ITransactionsHistoryQueryRepository _transactionsHistoryQueryRepository;
+    private readonly ITransactionsQueryRepository _transactionsQueryRepository;
     private readonly ILogger<GetTransactionByIdQueryHandler> _logger;
 
-    public GetTransactionByIdQueryHandler(ITransactionsHistoryQueryRepository transactionsHistoryQueryRepository, ILogger<GetTransactionByIdQueryHandler> logger)
+    public GetTransactionByIdQueryHandler(ITransactionsQueryRepository transactionsQueryRepository, ILogger<GetTransactionByIdQueryHandler> logger)
     {
-        _transactionsHistoryQueryRepository = transactionsHistoryQueryRepository;
+        _transactionsQueryRepository = transactionsQueryRepository;
         _logger = logger;
     }
 
     public async Task<TransactionResponse?> Handle(GetTransactionById request, CancellationToken cancellationToken)
     {
-        var transaction = await _transactionsHistoryQueryRepository.GetByTransactionIdAsync(request.Id);
-        if (transaction != null)
+        var transaction = await _transactionsQueryRepository.GetByTransactionIdAsync(request.Id);
+        if (transaction is not null)
         {
             return TransactionResponse.Map(
                 transaction.Id,
