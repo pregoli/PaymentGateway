@@ -39,7 +39,7 @@ internal class SubmitPaymenthandler : IRequestHandler<SubmitPayment, Guid>
         
         await _transactionsWriteRepository.SaveAsync(transaction!);
 
-        _ = Task.Run(() => _publisher.Publish(new PaymentSubmitted(transaction), cancellationToken));
+        _publisher.Publish(new PaymentSubmitted(transaction), cancellationToken);
 
         return transaction!.Id;
     }
