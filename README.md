@@ -1,3 +1,3 @@
 # PaymentGateway
 
-![alt text]([http://url/to/img.png](https://raw.githubusercontent.com/pregoli/PaymentGateway/master/appdiagram.png))
+![Checkout Api](https://github.com/pregoli/PaymentGateway/blob/master/appdiagram.png)
