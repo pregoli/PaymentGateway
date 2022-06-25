@@ -17,7 +17,7 @@ public static class Configuration
     {
         services
             .AddEntityFrameworkInMemoryDatabase()
-            .AddDbContext<CheckoutDbContext>(opt => opt.UseInMemoryDatabase("Checkout"));
+            .AddDbContext<CheckoutDbContext>(opt => opt.UseInMemoryDatabase("Checkout", b => b.EnableNullChecks(false)));
 
         services.AddScoped<IAcquiringBankProvider, AcquiringBankProvider>();
 

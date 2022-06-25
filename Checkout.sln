@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.Command.Application", "App\Checkout.Command.Application\Checkout.Command.Application.csproj", "{80847D14-CA15-414F-9BDC-3EBC973066B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.Tests", "Checkout.Tests\Checkout.Tests.csproj", "{5BCC674C-79AA-454A-8B9B-E7007830F50F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.Query.Application", "App\Checkout.Query.Application\Checkout.Query.Application.csproj", "{1217C55C-7DA5-4E6E-B9F6-C150FD4CE309}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkout.Api.Tests", "Tests\Checkout.Api.Tests\Checkout.Api.Tests.csproj", "{337C8462-1053-4E04-A7D8-FA846F19B97D}"
@@ -49,10 +47,6 @@ Global
 		{80847D14-CA15-414F-9BDC-3EBC973066B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80847D14-CA15-414F-9BDC-3EBC973066B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80847D14-CA15-414F-9BDC-3EBC973066B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5BCC674C-79AA-454A-8B9B-E7007830F50F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BCC674C-79AA-454A-8B9B-E7007830F50F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BCC674C-79AA-454A-8B9B-E7007830F50F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BCC674C-79AA-454A-8B9B-E7007830F50F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1217C55C-7DA5-4E6E-B9F6-C150FD4CE309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1217C55C-7DA5-4E6E-B9F6-C150FD4CE309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1217C55C-7DA5-4E6E-B9F6-C150FD4CE309}.Release|Any CPU.ActiveCfg = Release|Any CPU

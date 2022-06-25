@@ -5,9 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Checkout.Query.Application.Queries;
 
-public class GetTransactionByMerchantId : IRequest<List<TransactionResponse>>
+public class GetTransactionsByMerchantId : IRequest<List<TransactionResponse>>
 {
-    public GetTransactionByMerchantId(Guid merchantId)
+    public GetTransactionsByMerchantId(Guid merchantId)
     {
         MerchantId = merchantId;
     }
@@ -15,18 +15,18 @@ public class GetTransactionByMerchantId : IRequest<List<TransactionResponse>>
     public Guid MerchantId { get; }
 }
 
-public class GetTransactionByMerchantIdQueryHandler : IRequestHandler<GetTransactionByMerchantId, List<TransactionResponse>>
+public class GetTransactionsByMerchantIdQueryHandler : IRequestHandler<GetTransactionsByMerchantId, List<TransactionResponse>>
 {
     private readonly ITransactionsHistoryQueryRepository _transactionsHistoryQueryRepository;
-    private readonly ILogger<GetTransactionByMerchantIdQueryHandler> _logger;
+    private readonly ILogger<GetTransactionsByMerchantIdQueryHandler> _logger;
 
-    public GetTransactionByMerchantIdQueryHandler(ITransactionsHistoryQueryRepository transactionsHistoryQueryRepository, ILogger<GetTransactionByMerchantIdQueryHandler> logger)
+    public GetTransactionsByMerchantIdQueryHandler(ITransactionsHistoryQueryRepository transactionsHistoryQueryRepository, ILogger<GetTransactionsByMerchantIdQueryHandler> logger)
     {
         _transactionsHistoryQueryRepository = transactionsHistoryQueryRepository;
         _logger = logger;
     }
 
-    public async Task<List<TransactionResponse>> Handle(GetTransactionByMerchantId request, CancellationToken cancellationToken)
+    public async Task<List<TransactionResponse>> Handle(GetTransactionsByMerchantId request, CancellationToken cancellationToken)
     {
         var response = new List<TransactionResponse>();
 

@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Checkout.Domain.Transaction.ValueObjects;
 using Checkout.Query.Application.Extensions;
 
