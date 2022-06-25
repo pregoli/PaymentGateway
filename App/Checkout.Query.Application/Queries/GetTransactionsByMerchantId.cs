@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Checkout.Query.Application.Queries;
 
-public class GetTransactionsByMerchantId : IRequest<List<TransactionResponse>>
+public class GetTransactionsByMerchantId : IRequest<IReadOnlyList<TransactionResponse>>
 {
     public GetTransactionsByMerchantId(Guid merchantId)
     {
@@ -15,7 +15,7 @@ public class GetTransactionsByMerchantId : IRequest<List<TransactionResponse>>
     public Guid MerchantId { get; }
 }
 
-public class GetTransactionsByMerchantIdQueryHandler : IRequestHandler<GetTransactionsByMerchantId, List<TransactionResponse>>
+public class GetTransactionsByMerchantIdQueryHandler : IRequestHandler<GetTransactionsByMerchantId, IReadOnlyList<TransactionResponse>>
 {
     private readonly ITransactionsQueryRepository _transactionsQueryRepository;
     private readonly ILogger<GetTransactionsByMerchantIdQueryHandler> _logger;
@@ -26,7 +26,7 @@ public class GetTransactionsByMerchantIdQueryHandler : IRequestHandler<GetTransa
         _logger = logger;
     }
 
-    public async Task<List<TransactionResponse>> Handle(GetTransactionsByMerchantId request, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<TransactionResponse>> Handle(GetTransactionsByMerchantId request, CancellationToken cancellationToken)
     {
         var response = new List<TransactionResponse>();
 
@@ -36,7 +36,8 @@ public class GetTransactionsByMerchantIdQueryHandler : IRequestHandler<GetTransa
             return transactions.Select(transaction => TransactionResponse.Map(
                 transaction.Id,
                 transaction.MerchantId,
-                transaction.CardDetails,
+                transaction.CardHolderName,
+                transaction.CardNumber,
                 transaction.Amount,
                 transaction.Status.ToString(),
                 transaction.Description,

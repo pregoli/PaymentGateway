@@ -34,7 +34,8 @@ public class GetTransactionByIdQueryHandler : IRequestHandler<GetTransactionById
             return TransactionResponse.Map(
                 transaction.Id,
                 transaction.MerchantId,
-                transaction.CardDetails,
+                transaction.CardHolderName,
+                transaction.CardNumber,
                 transaction.Amount,
                 transaction.Status.ToString(),
                 transaction.Description,

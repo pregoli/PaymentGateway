@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Checkout.Domain.Transaction.Enums;
 using Checkout.Domain.Transaction.ValueObjects;
 using Checkout.Query.Application.Extensions;
@@ -42,18 +42,18 @@ public record TransactionResponse
     public static TransactionResponse Map(
         Guid transactionId,
         Guid merchantId,
-        string stringfiedCardDetails,
+        string cardHolderName,
+        string cardNumber,
         decimal amount,
         string status,
         string description,
         DateTime timestamp)
     {
-        var cardDetails = JsonSerializer.Deserialize<CardDetails>(stringfiedCardDetails);
         return new TransactionResponse(
             transactionId,
             merchantId,
-            cardDetails!.CardHolderName,
-            cardDetails.CardNumber.Mask('X'),
+            cardHolderName,
+            cardNumber.Mask('X'),
             amount,
             status,
             description,

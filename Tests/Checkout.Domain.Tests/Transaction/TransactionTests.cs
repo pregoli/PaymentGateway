@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using Checkout.Domain.Transaction.Enums;
+﻿using Checkout.Domain.Transaction.Enums;
 using Checkout.Domain.Transaction.Exceptions;
 using Checkout.Domain.Transaction.ValueObjects;
 using FluentAssertions;
@@ -23,17 +22,21 @@ namespace Checkout.Domain.Tests.Transaction
             }
 
             [TestCaseSource(nameof(ValidCardDetailsCaseSource))]
-            public void Given_Valid_Specifications_Then_A_Transaction_Should_Be_Created(CardDetails cardDetails)
+            public void Given_Valid_Specifications_Then_A_Transaction_Should_Be_Created(CardDetails creditCard)
             {
                 //Arrange
                 var merchantId = Guid.NewGuid();
 
                 //Act
-                var transaction = Domain.Transaction.Transaction.Create(merchantId, 100, cardDetails);
+                var transaction = Domain.Transaction.Transaction.Create(merchantId, 100, creditCard);
 
                 //Assert
                 transaction.MerchantId.Should().Be(merchantId);
-                JsonSerializer.Deserialize<CardDetails>(transaction.CardDetails).Should().Be(cardDetails);
+                transaction.CardHolderName.Should().Be(creditCard.HolderName);
+                transaction.CardNumber.Should().Be(creditCard.Number);
+                transaction.CardExpirationMonth.Should().Be(creditCard.ExpirationMonth);
+                transaction.CardExpirationYear.Should().Be(creditCard.ExpirationYear);
+                transaction.CardCvv.Should().Be(creditCard.Cvv);
             }
         }
 
@@ -74,72 +77,30 @@ namespace Checkout.Domain.Tests.Transaction
         protected static readonly object[] InvalidCardDetailsCaseSource = {
                 new object[]
                 {
-                    new CardDetails
-                    {
-                        CardHolderName = "Paolo Regoli",
-                        CardNumber = "",
-                        Cvv = "123",
-                        ExpirationMonth = "12",
-                        ExpirationYear = "2026"
-                    }
+                    CardDetails.Create("Paolo Regoli", "", "12", "2026", "123")
                 },
                 new object[]
                 {
-                    new CardDetails
-                    {
-                        CardHolderName = "Paolo Regoli",
-                        CardNumber = "1234123412341234",
-                        Cvv = "956",
-                        ExpirationMonth = "12",
-                        ExpirationYear = "2021"
-                    }
+                    CardDetails.Create("Paolo Regoli", "1234123412341234", "12", "2021", "956")
                 },
                 new object[]
                 {
-                    new CardDetails
-                    {
-                        CardHolderName = "Paolo Regoli",
-                        CardNumber = "5436031030606378",
-                        Cvv = "",
-                        ExpirationMonth = "12",
-                        ExpirationYear = "2026"
-                    }
+                    CardDetails.Create("Paolo Regoli", "5436031030606378", "12", "2026", "")
                 }
             };
         
         protected static readonly object[] ValidCardDetailsCaseSource = {
                 new object[]
                 {
-                    new CardDetails
-                    {
-                        CardHolderName = "Paolo Regoli",
-                        CardNumber = "4242424242424242",
-                        Cvv = "100",
-                        ExpirationMonth = "12",
-                        ExpirationYear = "2026"
-                    }
+                    CardDetails.Create("Paolo Regoli", "4242424242424242", "12", "2026", "100")
                 },
                 new object[]
                 {
-                    new CardDetails
-                    {
-                        CardHolderName = "Paolo Regoli",
-                        CardNumber = "4543474002249996",
-                        Cvv = "956",
-                        ExpirationMonth = "12",
-                        ExpirationYear = "2026"
-                    }
+                    CardDetails.Create("Paolo Regoli", "4543474002249996", "12", "2026", "956")
                 },
                 new object[]
                 {
-                    new CardDetails
-                    {
-                        CardHolderName = "Paolo Regoli",
-                        CardNumber = "5436031030606378",
-                        Cvv = "257",
-                        ExpirationMonth = "12",
-                        ExpirationYear = "2026"
-                    }
+                    CardDetails.Create("Paolo Regoli", "5436031030606378", "12", "2026", "257")
                 }
             };
     }

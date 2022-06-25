@@ -42,14 +42,8 @@ internal class GetTransactionByIdTests
     {
         //Arrange
         var query = new GetTransactionById(Guid.NewGuid());
-        var transaction = Transaction.Create(Guid.NewGuid(), 100, new CardDetails
-        {
-            CardHolderName = "Paolo Regoli",
-            CardNumber = "4242424242424242",
-            Cvv = "100",
-            ExpirationMonth = "12",
-            ExpirationYear = "2026"
-        });
+        var transaction = Transaction.Create(
+            Guid.NewGuid(), 100, CardDetails.Create("Paolo Regoli", "4242424242424242", "12", "2026", "100"));
 
         _transactionsQueryRepository.Setup(repo => repo.GetByTransactionIdAsync(query.Id))
             .ReturnsAsync(transaction);

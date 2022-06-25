@@ -1,6 +1,6 @@
 ﻿using Checkout.Command.Application.Commands;
+using Checkout.Command.Application.Dtos;
 using Checkout.Command.Application.Interfaces;
-using Checkout.Domain.Transaction.ValueObjects;
 using MediatR;
 
 namespace Checkout.Command.Application;
@@ -13,9 +13,9 @@ internal class CheckoutCommandApplication : ICheckoutCommandApplication
         _sender = sender;
     }
 
-    public async Task<Guid> ExecutePayment(Guid merchantId, CardDetails CardDetails, decimal amount)
+    public async Task<Guid> SubmitPayment(Guid merchantId, CardDetailsDto CardDetails, decimal amount)
     {
-        var executePayment = new ExecutePayment(merchantId, CardDetails, amount);
-        return await _sender.Send(executePayment);
+        var command = new SubmitPayment(merchantId, CardDetails, amount);
+        return await _sender.Send(command);
     }
 }

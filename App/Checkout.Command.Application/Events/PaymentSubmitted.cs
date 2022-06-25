@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Checkout.Command.Application.Events;
 
-internal record PaymentExecuted : INotification
+internal record PaymentSubmitted : INotification
 {
-    public PaymentExecuted(Transaction? transaction)
+    public PaymentSubmitted(Transaction? transaction)
     {
         Transaction = transaction;
     }
@@ -16,23 +16,23 @@ internal record PaymentExecuted : INotification
     internal Transaction? Transaction { get; private init; }
 }
 
-internal class PaymentExecutedHandler : INotificationHandler<PaymentExecuted>
+internal class PaymentSubmittedHandler : INotificationHandler<PaymentSubmitted>
 {
     private readonly IAcquiringBankProvider _acquiringBankProvider;
     private readonly ITransactionsWriteRepository _transactionsWriteRepository;
-    private readonly ILogger<PaymentExecutedHandler> _logger;
+    private readonly ILogger<PaymentSubmittedHandler> _logger;
 
-    public PaymentExecutedHandler(
+    public PaymentSubmittedHandler(
         IAcquiringBankProvider acquiringBankProvider,
         ITransactionsWriteRepository transactionsWriteRepository,
-        ILogger<PaymentExecutedHandler> logger)
+        ILogger<PaymentSubmittedHandler> logger)
     {
         _acquiringBankProvider = acquiringBankProvider;
         _transactionsWriteRepository = transactionsWriteRepository;
         _logger = logger;
     }
 
-    public async Task Handle(PaymentExecuted @event, CancellationToken cancellationToken)
+    public async Task Handle(PaymentSubmitted @event, CancellationToken cancellationToken)
     {
         try
         {

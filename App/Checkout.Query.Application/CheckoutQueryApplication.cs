@@ -18,7 +18,7 @@ internal class CheckoutQueryApplication : ICheckoutQueryApplication
         return await _sender.Send(new GetTransactionById(transactionId));
     }
 
-    public async Task<List<TransactionResponse>> GetTransactionsByMerchantIdAsync(Guid merchantId)
+    public async Task<IReadOnlyList<TransactionResponse>> GetTransactionsByMerchantIdAsync(Guid merchantId)
     {
         return await _sender.Send(new GetTransactionsByMerchantId(merchantId));
     }

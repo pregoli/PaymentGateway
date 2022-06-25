@@ -17,7 +17,7 @@ public class TransactionsQueryRepository : ITransactionsQueryRepository
         return await _context.Transactions.FindAsync(transactionId);
     }
 
-    public async Task<List<Transaction>> GetByMerchantIdAsync(Guid merchantId)
+    public async Task<IReadOnlyList<Transaction>> GetByMerchantIdAsync(Guid merchantId)
     {
         return await _context.Transactions.Where(x => x.MerchantId == merchantId).ToListAsync();
     }

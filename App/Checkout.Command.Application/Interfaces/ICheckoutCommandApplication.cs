@@ -1,8 +1,8 @@
-﻿using Checkout.Domain.Transaction.ValueObjects;
+﻿using Checkout.Command.Application.Dtos;
 
 namespace Checkout.Command.Application.Interfaces;
 
 public interface ICheckoutCommandApplication
 {
-    Task<Guid> ExecutePayment(Guid merchantId, CardDetails CardDetails, decimal amount);
+    Task<Guid> SubmitPayment(Guid merchantId, CardDetailsDto CardDetails, decimal amount);
 }

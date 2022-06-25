@@ -1,4 +1,5 @@
-﻿using Checkout.Domain.Transaction.ValueObjects;
+﻿using Checkout.Command.Application.Dtos;
+using Checkout.Domain.Transaction.ValueObjects;
 using MediatR;
 using Moq;
 using NUnit.Framework;
@@ -18,16 +19,16 @@ internal class CheckoutCommandApplicationTests
         _application = new CheckoutCommandApplication(_sender.Object);
     }
 
-    internal class ExecutePayment : CheckoutCommandApplicationTests
+    internal class SubmitPayment : CheckoutCommandApplicationTests
     {
         [Test]
-        public async Task Given_Input_Parameters_Then_An_ExecutePayment_Command_Should_Be_Sent()
+        public async Task Given_Input_Parameters_Then_An_SubmitPayment_Command_Should_Be_Sent()
         {
             //Act
-            _ = await _application.ExecutePayment(Guid.NewGuid(), new CardDetails(), 100);
+            _ = await _application.SubmitPayment(Guid.NewGuid(), new CardDetailsDto(), 100);
 
             //Assert
-            _sender.Verify(mock => mock.Send(It.IsAny<Application.Commands.ExecutePayment>(), default), Times.Exactly(1));
+            _sender.Verify(mock => mock.Send(It.IsAny<Application.Commands.SubmitPayment>(), default), Times.Exactly(1));
         }
     }
 }

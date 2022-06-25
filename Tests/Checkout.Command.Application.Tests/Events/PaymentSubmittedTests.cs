@@ -10,40 +10,34 @@ using NUnit.Framework;
 namespace Checkout.Command.Application.Tests.Events;
 
 [TestFixture]
-internal class PaymentExecutedTests
+internal class PaymentSubmittedTests
 {
     private Mock<IAcquiringBankProvider> _acquiringBankProvider = null!;
     private Mock<ITransactionsWriteRepository> _transactionsWriteRepository = null!;
-    private PaymentExecutedHandler _paymentExecutedHandler = null!;
+    private PaymentSubmittedHandler _paymentSubmittedHandler = null!;
 
-    private readonly Transaction _transactionPayload = Transaction.Create(Guid.NewGuid(), 100, new CardDetails
-    {
-        CardHolderName = "Paolo Regoli",
-        CardNumber = "4242424242424242",
-        Cvv = "100",
-        ExpirationMonth = "12",
-        ExpirationYear = "2026"
-    });
+    private readonly Transaction _transactionPayload = Transaction.Create(
+        Guid.NewGuid(), 100, CardDetails.Create("Paolo Regoli", "4242424242424242", "12", "2026", "100"));
 
     [SetUp]
     public void Setup()
     {
         _acquiringBankProvider = new Mock<IAcquiringBankProvider>();
         _transactionsWriteRepository = new Mock<ITransactionsWriteRepository>();
-        _paymentExecutedHandler = new PaymentExecutedHandler(_acquiringBankProvider.Object, _transactionsWriteRepository.Object, default!);
+        _paymentSubmittedHandler = new PaymentSubmittedHandler(_acquiringBankProvider.Object, _transactionsWriteRepository.Object, default!);
     }
 
     [Test]
-    public async Task Given_A_PaymentExecuted_Event_With_An_Invalid_Payload_Then_The_Transaction_Should_Be_Rejected()
+    public async Task Given_A_PaymentSubmitted_Event_With_An_Invalid_Payload_Then_The_Transaction_Should_Be_Rejected()
     {
         //Arrange
-        var @event = new PaymentExecuted(_transactionPayload);
+        var @event = new PaymentSubmitted(_transactionPayload);
 
         _ = _acquiringBankProvider.Setup(x => x.ValidateTransaction(It.IsAny<TransactionAuthorizationRequest>()))
             .Returns(new TransactionAuthorizationResponse(default, Authorized: false, default!, default!));
 
         //Act
-        await _paymentExecutedHandler.Handle(@event, default);
+        await _paymentSubmittedHandler.Handle(@event, default);
 
         //Assert
         _transactionPayload!.Successful.Should().BeFalse();
@@ -51,16 +45,16 @@ internal class PaymentExecutedTests
     }
 
     [Test]
-    public async Task Given_A_PaymentExecuted_Event_With_A_Valid_Payload_Then_The_Transaction_Should_Be_Authorized()
+    public async Task Given_A_PaymentSubmitted_Event_With_A_Valid_Payload_Then_The_Transaction_Should_Be_Authorized()
     {
         //Arrange
-        var @event = new PaymentExecuted(_transactionPayload);
+        var @event = new PaymentSubmitted(_transactionPayload);
 
         _ = _acquiringBankProvider.Setup(x => x.ValidateTransaction(It.IsAny<TransactionAuthorizationRequest>()))
             .Returns(new TransactionAuthorizationResponse(default, Authorized: true, default!, default!));
 
         //Act
-        await _paymentExecutedHandler.Handle(@event, default);
+        await _paymentSubmittedHandler.Handle(@event, default);
 
         //Assert
         _transactionPayload!.Successful.Should().BeTrue();

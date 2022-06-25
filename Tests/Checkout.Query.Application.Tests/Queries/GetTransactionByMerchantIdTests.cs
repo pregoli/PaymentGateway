@@ -26,9 +26,8 @@ internal class GetTransactionByMerchantIdTests
     {
         //Arrange
         var query = new GetTransactionsByMerchantId(Guid.NewGuid());
-        List<Transaction> transactions = null!;
         _transactionsQueryRepository.Setup(repository => repository.GetByMerchantIdAsync(query.MerchantId))!
-            .ReturnsAsync(transactions);
+            .ReturnsAsync(new List<Transaction>());
 
         //Act
         var result = await _handler.Handle(query, default);
@@ -45,14 +44,7 @@ internal class GetTransactionByMerchantIdTests
         var query = new GetTransactionsByMerchantId(Guid.NewGuid());
         var transactions = new List<Transaction?>
         {
-            Transaction.Create(Guid.NewGuid(), 100, new CardDetails
-            {
-                CardHolderName = "Paolo Regoli",
-                CardNumber = "4242424242424242",
-                Cvv = "100",
-                ExpirationMonth = "12",
-                ExpirationYear = "2026"
-            })
+            Transaction.Create(Guid.NewGuid(), 100, CardDetails.Create("Paolo Regoli", "4242424242424242", "12", "2026", "100"))
         };
 
         _transactionsQueryRepository.Setup(repo => repo.GetByMerchantIdAsync(query.MerchantId))
