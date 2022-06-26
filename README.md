@@ -13,7 +13,7 @@ The project structure follows the [Clean Architecture](https://blog.cleancoder.c
  </tr>
 </table>
 
-  - `Domain`: It is the center of the application which is not referencing any other project.
+  - `Domain`: It is the center of the application which is not referencing any other project. It contains the domain model, value objects and domain exceptions.
   - `Command.Application`: It's responsible to submit the payment through commands & events into the database. It is also exposing interfaces implemented by the infrastructure. It's referencing the Domain layer and referenced by the Api & Infrastructure layers.
   - `Query.Application`: It's responsible to query the transactions from database through the query handler. It is also exposing interfaces implemented by the infrastructure. It's referencing the Domain layer and referenced by the Api & Infrastructure layers.
   - `Infrastructure`: It's exposing concrete infrastructure implementations as write & read repositories, telemetries...
