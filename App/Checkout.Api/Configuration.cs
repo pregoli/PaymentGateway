@@ -38,7 +38,7 @@ internal static class Configuration
             options.SupportNonNullableReferenceTypes();
             options.ExampleFilters();
             options.UseInlineDefinitionsForEnums();
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Checkout Gateway API", Version = "Beta" });
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Payment Gateway API", Version = "Beta" });
         });
 
         services.AddResponseCompression();

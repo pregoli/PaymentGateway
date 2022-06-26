@@ -2,5 +2,5 @@
 
 public interface IMetricsService
 {
-    Task<string> GetAsync();
+    Task<string?> GetAsync();
 }

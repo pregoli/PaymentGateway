@@ -34,8 +34,8 @@ internal class SubmitPaymenthandler : IRequestHandler<SubmitPayment, Guid>
 
     public async Task<Guid> Handle(SubmitPayment command, CancellationToken cancellationToken)
     {
-        var creditCard = CardDetails.Create(command.CardDetails.HolderName, command.CardDetails.Number, command.CardDetails.ExpirationMonth, command.CardDetails.ExpirationYear, command.CardDetails.Cvv);
-        var transaction = Transaction.Create(command.MerchantId, command.Amount, creditCard);
+        var cardDetails = CardDetails.Create(command.CardDetails.HolderName, command.CardDetails.Number, command.CardDetails.ExpirationMonth, command.CardDetails.ExpirationYear, command.CardDetails.Cvv);
+        var transaction = Transaction.Create(command.MerchantId, command.Amount, cardDetails);
         
         await _transactionsWriteRepository.SaveAsync(transaction!);
 

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Checkout.Domain.Transaction.Enums;
+﻿using Checkout.Domain.Transaction.Enums;
 using Checkout.Domain.Transaction.Specifications;
 using Checkout.Domain.Transaction.ValueObjects;
 
@@ -7,22 +6,24 @@ namespace Checkout.Domain.Transaction
 {
     public class Transaction
     {
-        private Transaction() {}
+        private Transaction()
+        {
+        }
 
         private Transaction(
             Guid id,
             Guid merchantId,
             decimal amount,
-            CardDetails creditCard)
+            CardDetails cardDetails)
         {
             Id = id;
             MerchantId = merchantId;
             Amount = amount;
-            CardHolderName = creditCard.HolderName;
-            CardNumber = creditCard.Number;
-            CardExpirationMonth = creditCard.ExpirationMonth;
-            CardExpirationYear = creditCard.ExpirationYear;
-            CardCvv = creditCard.Cvv;
+            CardHolderName = cardDetails.HolderName;
+            CardNumber = cardDetails.Number;
+            CardExpirationMonth = cardDetails.ExpirationMonth;
+            CardExpirationYear = cardDetails.ExpirationYear;
+            CardCvv = cardDetails.Cvv;
             Status = TransactionStatus.Processing;
         }
 
@@ -30,8 +31,6 @@ namespace Checkout.Domain.Transaction
         public Guid MerchantId { get; private set; }
         public static string Currency => "GBP";
         public decimal Amount { get; private set; }
-        [NotMapped]
-        public CardDetails CreditCard { get; private set; }
         public string CardHolderName { get; private set; }
         public string CardNumber { get; private set; }
         public string CardExpirationMonth { get; private set; }
@@ -42,13 +41,13 @@ namespace Checkout.Domain.Transaction
         public bool Successful => Status == TransactionStatus.Authorized;
         public DateTime Timestamp { get; private set; } = DateTime.UtcNow;
 
-        public static Transaction Create(Guid merchantId, decimal amount, CardDetails creditCard)
+        public static Transaction Create(Guid merchantId, decimal amount, CardDetails cardDetails)
         {
             ValidMerchantIdSpecification.Validate(merchantId);
             ValidAmountSpecification.Validate(amount);
-            ValidCardDetailsSpecification.Validate(creditCard);
+            ValidCardDetailsSpecification.Validate(cardDetails);
 
-            return new Transaction(Guid.NewGuid(), merchantId, amount, creditCard);
+            return new Transaction(Guid.NewGuid(), merchantId, amount, cardDetails);
         }
 
         public void Reject(string description)

@@ -13,7 +13,7 @@ namespace Checkout.Infrastructure.Instrumentation
             _logger = logger;
         }
 
-        public async Task<string> GetAsync()
+        public async Task<string?> GetAsync()
         {
             var response = await _httpClient.GetAsync($"metrics");
             return response.IsSuccessStatusCode ? await response.Content.ReadAsStringAsync() : response.ReasonPhrase;
