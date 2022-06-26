@@ -17,12 +17,12 @@ public static class Configuration
     {
         services
             .AddEntityFrameworkInMemoryDatabase()
-            .AddDbContext<CheckoutDbContext>(opt => opt.UseInMemoryDatabase("Checkout", b => b.EnableNullChecks(false)));
+            .AddDbContext<CheckoutDbContext>(opt => opt.UseInMemoryDatabase("Checkout", b => b.EnableNullChecks(false)), ServiceLifetime.Singleton);
 
         services.AddScoped<IAcquiringBankProvider, AcquiringBankProvider>();
 
-        services.AddScoped<ITransactionsWriteRepository, TransactionsWriteRepository>();
-        services.AddScoped<ITransactionsQueryRepository, TransactionsQueryRepository>();
+        services.AddSingleton<ITransactionsWriteRepository, TransactionsWriteRepository>();
+        services.AddSingleton<ITransactionsQueryRepository, TransactionsQueryRepository>();
 
         services.AddHttpClient<IMetricsService, MetricsService>(
                     client =>

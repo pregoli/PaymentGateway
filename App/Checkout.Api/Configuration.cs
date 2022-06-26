@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using Checkout.Api.Requests;
 using Checkout.Domain.Transaction.Exceptions;
-using Checkout.Infrastructure.Persistence;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -56,19 +55,6 @@ internal static class Configuration
         app.UseHttpsRedirection();
         app.MapControllers();
 
-        MigrateDatabase(app);
-
         return app;
-    }
-
-    private static void MigrateDatabase(IApplicationBuilder builder)
-    {
-        using (var serviceScope = builder.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-        {
-            using (var context = serviceScope.ServiceProvider.GetService<CheckoutDbContext>())
-            {
-                context!.Database.EnsureCreated();
-            }
-        }
     }
 }
