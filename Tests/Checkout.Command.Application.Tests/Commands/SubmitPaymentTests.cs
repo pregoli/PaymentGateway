@@ -4,7 +4,6 @@ using Checkout.Command.Application.Events;
 using Checkout.Command.Application.Interfaces;
 using Checkout.Domain.Transaction;
 using Checkout.Domain.Transaction.Exceptions;
-using Checkout.Domain.Transaction.ValueObjects;
 using FluentAssertions;
 using MediatR;
 using Moq;

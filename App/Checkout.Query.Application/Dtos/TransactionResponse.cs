@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Checkout.Domain.Transaction.Enums;
-using Checkout.Domain.Transaction.ValueObjects;
+﻿using Checkout.Domain.Transaction.Enums;
 using Checkout.Query.Application.Extensions;
 
 namespace Checkout.Query.Application.Dtos;

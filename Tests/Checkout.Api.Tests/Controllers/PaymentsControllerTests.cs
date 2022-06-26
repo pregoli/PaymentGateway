@@ -2,7 +2,6 @@
 using Checkout.Api.Requests;
 using Checkout.Command.Application.Dtos;
 using Checkout.Command.Application.Interfaces;
-using Checkout.Domain.Transaction.ValueObjects;
 using Moq;
 using NUnit.Framework;
 
@@ -24,7 +23,7 @@ internal class PaymentsControllerTests
     internal class SubmitPayment : PaymentsControllerTests
     {
         [Test]
-        public async Task Given_A_Transaction_Request_Then_A_The_Command_Service_Should_Be_Invoked()
+        public async Task Given_A_Transaction_Request_Then_The_Command_Service_Should_Be_Invoked()
         {
             //Arrange
             var transactionrequest = new TransactionRequest();

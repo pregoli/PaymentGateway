@@ -1,5 +1,4 @@
 ﻿using Checkout.Command.Application.Dtos;
-using Checkout.Domain.Transaction.ValueObjects;
 using MediatR;
 using Moq;
 using NUnit.Framework;

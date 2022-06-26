@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using Checkout.Api.Controllers;
+﻿using Checkout.Api.Controllers;
 using Checkout.Command.Application.Dtos;
 using Checkout.Query.Application.Dtos;
 using Checkout.Query.Application.Interfaces;
@@ -26,7 +25,7 @@ internal class TransactionsControllerTests
     internal class GetTransactionById : TransactionsControllerTests
     {
         [Test]
-        public async Task Given_A_Transaction_Id_Then_A_The_Query_Service_Should_Be_Invoked()
+        public async Task Given_A_Transaction_Id_Then_The_Query_Service_Should_Be_Invoked()
         {
             //Arrange
             var transactionId = Guid.NewGuid();
@@ -85,7 +84,7 @@ internal class TransactionsControllerTests
     internal class GetTransactionByMerchantId : TransactionsControllerTests
     {
         [Test]
-        public async Task Given_A_Merchant_Id_Then_A_The_Query_Service_Should_Be_Invoked()
+        public async Task Given_A_Merchant_Id_Then_The_Query_Service_Should_Be_Invoked()
         {
             //Arrange
             var merchantId = Guid.NewGuid();
