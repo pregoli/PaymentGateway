@@ -77,7 +77,7 @@ Each endpoint exposes its request/response schema.
 
 ## Playground
 
-1. Submit one or more payments through the `/api/beta/transactions` endpoint.
+1. Submit one or more payments through the `/api/beta/transactions` endpoint. (use card numbers from [Checkout Test card numbers](https://www.checkout.com/docs/testing/test-card-numbers) for valid ones).
 2. Use the transactionId from previous response to invoke the `/api/beta/transactions/{id}/` and fetch the transaction detail.
 3. Use the merchantId from the previous response to invoke the `/api/beta/merchants/{id}/transactions` and fetch all the transactions against the given merchant.
 4. After playng around with above endpoints, you can try out and have a look at metrics recorder by `Prometheus` at the endpoint `/api/beta/metrics`
